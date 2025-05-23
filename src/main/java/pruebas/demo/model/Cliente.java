@@ -3,7 +3,6 @@ package pruebas.demo.model;
 import java.util.HashSet;
 import java.util.Set;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -14,6 +13,7 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
+import pruebas.demo.model.tipos.TipoCliente;
 
 @Data
 @Entity
@@ -21,7 +21,6 @@ import lombok.Data;
 public class Cliente {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idCliente") // Asegúrate de que coincide con la BD
     private Long idCliente;
 
     private String nombreCliente;

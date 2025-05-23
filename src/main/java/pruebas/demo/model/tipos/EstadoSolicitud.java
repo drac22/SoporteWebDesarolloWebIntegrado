@@ -1,4 +1,5 @@
-package pruebas.demo.model;
+package pruebas.demo.model.tipos;
+
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -9,11 +10,11 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "tbl_tipo_cliente")
-public class TipoCliente {
+@Table(name = "tbl_estado_solicitud")
+public class EstadoSolicitud {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idTipoCliente;
+    private Long idEstadoSolicitud;
 
-    private String tipoCliente;
+    private String estadoSolicitud;
 }
