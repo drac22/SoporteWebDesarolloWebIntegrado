@@ -10,7 +10,7 @@ import pruebas.demo.model.Credencial;
 import pruebas.demo.service.CredencialService;
 
 @RestController
-@RequestMapping("/credenciales")
+@RequestMapping("/api")
 public class CredencialController {
     private final CredencialService credencialService;
 
@@ -18,7 +18,7 @@ public class CredencialController {
         this.credencialService = credencialService;
     }
 
-    @GetMapping
+    @GetMapping("/credenciales")
     public List<Credencial> mostrarCredenciales() {
         return credencialService.mostrarCredenciales();
     }

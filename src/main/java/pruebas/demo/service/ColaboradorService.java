@@ -2,6 +2,8 @@ package pruebas.demo.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import jakarta.transaction.Transactional;
@@ -16,17 +18,22 @@ import pruebas.demo.repository.TipoCredencialRepository;
 
 @Service
 public class ColaboradorService {
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     private final ColaboradorRepository colaboradorRepository;
     private final RolRepository rolRepository;
     private final TipoCredencialRepository tipoCredencialRepository;
 
-    public ColaboradorService(ColaboradorRepository colaboradorRepository, RolRepository rolRepository, TipoCredencialRepository tipoCredencialRepository) {
+    public ColaboradorService(ColaboradorRepository colaboradorRepository, RolRepository rolRepository,
+            TipoCredencialRepository tipoCredencialRepository) {
         this.colaboradorRepository = colaboradorRepository;
         this.rolRepository = rolRepository;
         this.tipoCredencialRepository = tipoCredencialRepository;
     }
 
-    public List<Colaborador> mostrarColaboradores(){
+    public List<Colaborador> mostrarColaboradores() {
         return colaboradorRepository.findAll();
     }
 
@@ -42,7 +49,7 @@ public class ColaboradorService {
 
         Credencial credencial = new Credencial();
         credencial.setCorreo(dto.getCorreo());
-        credencial.setPassword(dto.getPassword());
+        credencial.setPassword(passwordEncoder.encode(dto.getPassword()));
 
         TipoCredencial tipoCredencial = tipoCredencialRepository.findById(3L)
                 .orElseThrow(() -> new RuntimeException("ERROR"));

@@ -1,7 +1,10 @@
 package pruebas.demo.service;
 
 import java.util.List;
+import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import jakarta.transaction.Transactional;
@@ -16,6 +19,10 @@ import pruebas.demo.repository.UsuarioRepository;
 
 @Service
 public class UsuarioService {
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     private final UsuarioRepository usuarioRepository;
     private final ClienteRepository clienteRepository;
     private final TipoCredencialRepository tipoCredencialRepository;
@@ -31,6 +38,10 @@ public class UsuarioService {
         return usuarioRepository.findAll();
     }
 
+    public Optional<Usuario> buscarUsuarioPorId(Long id){
+        return usuarioRepository.findById(id);
+    }
+
     @Transactional
     public Usuario agregarClienteDesdeDto(UsuarioDTO dto) {
         Usuario usuario = new Usuario();
@@ -43,7 +54,7 @@ public class UsuarioService {
 
         Credencial credencial = new Credencial();
         credencial.setCorreo(dto.getCorreo());
-        credencial.setPassword(dto.getPassword());
+        credencial.setPassword(passwordEncoder.encode(dto.getPassword()));
 
         TipoCredencial tipoCredencial = tipoCredencialRepository.findById(1L)
                 .orElseThrow(() -> new RuntimeException("ERROR"));

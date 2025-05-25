@@ -1,9 +1,11 @@
 package pruebas.demo.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,6 +27,11 @@ public class UsuarioController {
     @GetMapping("/usuarios")
     public List<Usuario> mostrarUsuarios(){
         return usuarioService.mostrarUsuarios();
+    }
+
+    @GetMapping("/usuarios/{id}")
+    public Optional<Usuario> buscarPorId(@PathVariable Long id){
+        return usuarioService.buscarUsuarioPorId(id);
     }
 
     @PostMapping("/agregarUsuario")
