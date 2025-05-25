@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import jakarta.transaction.Transactional;
 import pruebas.demo.model.Cliente;
 import pruebas.demo.model.Software;
+import pruebas.demo.model.DTO.ClienteDTO;
 import pruebas.demo.model.tipos.TipoCliente;
 import pruebas.demo.repository.ClienteRepository;
 import pruebas.demo.repository.SoftwareRepository;
@@ -30,18 +31,21 @@ public class ClienteService {
     }
 
     @Transactional
-    public Cliente agregarCliente(Cliente cliente) {
-        // Recuperar tipoCliente desde la BD
-        TipoCliente tipo = tipoClienteRepository.findById(cliente.getTipoCliente().getIdTipoCliente())
+    public Cliente agregarClienteDesdeDTO(ClienteDTO dto) {
+        Cliente cliente = new Cliente();
+        cliente.setNombreCliente(dto.getNombreCliente());
+
+        // Buscar tipoCliente por ID
+        TipoCliente tipo = tipoClienteRepository.findById(dto.getTipoCliente())
                 .orElseThrow(() -> new RuntimeException("TipoCliente no encontrado"));
         cliente.setTipoCliente(tipo);
 
-        // Recuperar software desde la BD
-        Set<Software> softwaresActualizados = cliente.getSoftwares().stream()
-                .map(s -> softwareRepository.findById(s.getIdSoftware())
-                        .orElseThrow(() -> new RuntimeException("Software no encontrado con ID: " + s.getIdSoftware())))
+        // Buscar los softwares por ID
+        Set<Software> softwares = dto.getSoftwares().stream()
+                .map(id -> softwareRepository.findById(id)
+                        .orElseThrow(() -> new RuntimeException("Software no encontrado con ID: " + id)))
                 .collect(Collectors.toSet());
-        cliente.setSoftwares(softwaresActualizados);
+        cliente.setSoftwares(softwares);
 
         return clienteRepository.save(cliente);
     }

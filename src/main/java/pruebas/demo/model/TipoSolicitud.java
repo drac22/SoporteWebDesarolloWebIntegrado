@@ -1,4 +1,4 @@
-package pruebas.demo.model.tipos;
+package pruebas.demo.model;
 
 
 import jakarta.persistence.Entity;
