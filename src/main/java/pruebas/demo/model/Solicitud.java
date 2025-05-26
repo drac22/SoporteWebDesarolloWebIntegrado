@@ -14,6 +14,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
 import pruebas.demo.model.tipos.EstadoSolicitud;
+import pruebas.demo.model.tipos.TipoSolicitud;
 
 @Data
 @Entity
@@ -42,6 +43,10 @@ public class Solicitud {
     @ManyToOne
     @JoinColumn(name = "idTipoSolicitud")
     private TipoSolicitud tipoSolicitud;
+
+    @ManyToOne
+    @JoinColumn(name = "idColaboradorQueEsCoordinador")
+    private Colaborador idColaboradorQueEsCoordinador;
 
     // @OneToMany(mappedBy = "solicitud")
     // private List<Asignacion> asignaciones;
