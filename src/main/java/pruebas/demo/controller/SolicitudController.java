@@ -4,9 +4,11 @@ import java.util.List;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import pruebas.demo.model.Solicitud;
 import pruebas.demo.model.DTO.SolicitudDTO;
+import pruebas.demo.model.DTO.SolicitudDTOResponse;
 import pruebas.demo.service.SolicitudService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,6 +29,24 @@ public class SolicitudController {
     public List<Solicitud> mostrarSolicitud() {
         return solicitudService.mostrarSolicitudes();
     }
+
+    // @GetMapping("/mostrarSolicitudesByIdUsuario/{idUsuario}")
+    // public ResponseEntity<List<Solicitud>> listarPorUsuario(@PathVariable Long idUsuario) {
+    //     List<Solicitud> solicitudes = solicitudService.listarSolicitudesPorUsuario(idUsuario);
+    //     return ResponseEntity.ok(solicitudes);
+    // }
+
+    // @GetMapping("/mostrarSolicitudesByIdUsuario/{idUsuario}")
+    // public ResponseEntity<List<SolicitudDTOResponse>> listarPorUsuario(@PathVariable Long idUsuario) {
+    //     List<SolicitudDTOResponse> solicitudes = solicitudService.listarSolicitudesPorUsuario(idUsuario);
+    //     return ResponseEntity.ok(solicitudes);
+    // }
+
+    @GetMapping("/mostrarSolicitudesByIdUsuario/{idUsuario}")
+    public ResponseEntity<List<SolicitudDTOResponse>> listarPorUsuario(@PathVariable Long idUsuario) {
+    List<SolicitudDTOResponse> solicitudesDTO = solicitudService.listarSolicitudesPorUsuarioDTO(idUsuario);
+    return ResponseEntity.ok(solicitudesDTO);
+}
 
     @PostMapping("/agregarSolicitud")
     public ResponseEntity<Solicitud> agregarSolicitud(@RequestBody SolicitudDTO solicitudDTO) {

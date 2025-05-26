@@ -2,6 +2,7 @@ package pruebas.demo.service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
@@ -9,6 +10,7 @@ import jakarta.transaction.Transactional;
 import pruebas.demo.model.Solicitud;
 import pruebas.demo.model.Usuario;
 import pruebas.demo.model.DTO.SolicitudDTO;
+import pruebas.demo.model.DTO.SolicitudDTOResponse;
 import pruebas.demo.model.tipos.EstadoSolicitud;
 import pruebas.demo.model.tipos.TipoSolicitud;
 import pruebas.demo.repository.EstadoSolicitudRepository;
@@ -53,5 +55,31 @@ public class SolicitudService {
         nuevaSolicitud.setTipoSolicitud(tipoSolicitud);
 
         return solicitudRepository.save(nuevaSolicitud);
+    }
+
+    // public List<Solicitud> listarSolicitudesPorUsuario(Long idUsuario) {
+    // return solicitudRepository.findByUsuarioIdUsuario(idUsuario);
+    // }
+
+    public List<SolicitudDTOResponse> listarSolicitudesPorUsuarioDTO(Long idUsuario) {
+        List<Solicitud> solicitudes = solicitudRepository.findByUsuarioIdUsuario(idUsuario);
+
+        return solicitudes.stream().map(solicitud -> {
+            SolicitudDTOResponse dto = new SolicitudDTOResponse();
+            dto.setIdSolicitud(solicitud.getIdSolicitud());
+            dto.setIdUsuario(solicitud.getUsuario().getIdUsuario());
+            dto.setNombreUsuario(solicitud.getUsuario().getNombreUsuario()); // o getNombreUsuario(), depende de tu entidad
+                                                                      // Usuario
+            dto.setMotivo(solicitud.getMotivo());
+            dto.setEstado(solicitud.getEstado().getEstadoSolicitud()); // o como tengas el nombre del estado
+            dto.setFechaRegistro(solicitud.getFechaRegistro());
+            dto.setFechaCulminacion(solicitud.getFechaCulminacion());
+            dto.setTipoSolicitud(
+                    solicitud.getTipoSolicitud() != null ? solicitud.getTipoSolicitud().getTipoSolicitud() : null);
+            dto.setNombreCoordinador(solicitud.getIdColaboradorQueEsCoordinador() != null
+                    ? solicitud.getIdColaboradorQueEsCoordinador().getNombreColaborador()
+                    : null);
+            return dto;
+        }).collect(Collectors.toList());
     }
 }

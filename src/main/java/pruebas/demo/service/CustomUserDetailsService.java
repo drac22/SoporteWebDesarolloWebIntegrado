@@ -21,7 +21,14 @@ public class CustomUserDetailsService implements UserDetailsService {
         Credencial credencial = credencialRepository.findByCorreo(correo)
                 .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado"));
 
-        String rol = credencial.getTipoCredencial().getIdTipoCredencial() == 2 ? "ADMIN" : "COLABORADOR";
+                String rol;
+                if (credencial.getTipoCredencial().getIdTipoCredencial() == 2) {
+                    rol = "ADMIN";
+                } else if (credencial.getTipoCredencial().getIdTipoCredencial() == 1) {
+                    rol = "USUARIO";
+                } else {
+                    rol = "COLABORADOR";
+                }
 
         return User.builder()
                 .username(credencial.getCorreo())
