@@ -1,6 +1,7 @@
 package pruebas.demo.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
 import pruebas.demo.model.Asignacion;
@@ -13,19 +14,23 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-
 @RestController
 @RequestMapping("/api")
 public class AsignacionController {
 
     private final AsignacionService asignacionService;
 
-    public AsignacionController(AsignacionService asignacionService){
+    public AsignacionController(AsignacionService asignacionService) {
         this.asignacionService = asignacionService;
     }
 
-    @GetMapping("/mostrarColaboradores")
-    public List<Asignacion> mostrarColaboradoresAsignados(){
+    // @GetMapping("/mostrarColaboradores")
+    // public List<Asignacion> mostrarColaboradoresAsignados() {
+    //     return asignacionService.mostrarColaboradoresAsignados();
+    // }
+
+    @GetMapping("/mostrarAsignaciones")
+    public List<Map<String, Object>> mostrarColaboradoresAsignados() {
         return asignacionService.mostrarColaboradoresAsignados();
     }
 
@@ -34,5 +39,5 @@ public class AsignacionController {
         Asignacion nuevo = asignacionService.asignarColaborador(asignacionDTO);
         return ResponseEntity.ok(nuevo);
     }
-    
+
 }

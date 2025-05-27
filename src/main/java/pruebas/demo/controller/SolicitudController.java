@@ -30,18 +30,6 @@ public class SolicitudController {
         return solicitudService.mostrarSolicitudes();
     }
 
-    // @GetMapping("/mostrarSolicitudesByIdUsuario/{idUsuario}")
-    // public ResponseEntity<List<Solicitud>> listarPorUsuario(@PathVariable Long idUsuario) {
-    //     List<Solicitud> solicitudes = solicitudService.listarSolicitudesPorUsuario(idUsuario);
-    //     return ResponseEntity.ok(solicitudes);
-    // }
-
-    // @GetMapping("/mostrarSolicitudesByIdUsuario/{idUsuario}")
-    // public ResponseEntity<List<SolicitudDTOResponse>> listarPorUsuario(@PathVariable Long idUsuario) {
-    //     List<SolicitudDTOResponse> solicitudes = solicitudService.listarSolicitudesPorUsuario(idUsuario);
-    //     return ResponseEntity.ok(solicitudes);
-    // }
-
     @GetMapping("/mostrarSolicitudesByIdUsuario/{idUsuario}")
     public ResponseEntity<List<SolicitudDTOResponse>> listarPorUsuario(@PathVariable Long idUsuario) {
     List<SolicitudDTOResponse> solicitudesDTO = solicitudService.listarSolicitudesPorUsuarioDTO(idUsuario);

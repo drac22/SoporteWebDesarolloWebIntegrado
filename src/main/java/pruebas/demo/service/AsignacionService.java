@@ -1,6 +1,9 @@
 package pruebas.demo.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
@@ -27,39 +30,41 @@ public class AsignacionService {
         this.solicitudRepository = solicitudRepository;
     }
 
-    public List<Asignacion> mostrarColaboradoresAsignados() {
-        return asignacionRepository.findAll();
+    // public List<Asignacion> mostrarColaboradoresAsignados() {
+    // return asignacionRepository.findAll();
+    // }
+
+    public List<Map<String, Object>> mostrarColaboradoresAsignados() {
+        List<Asignacion> asignaciones = asignacionRepository.findAll();
+
+        return asignaciones.stream().map(asignacion -> {
+            Map<String, Object> resultado = new HashMap<>();
+            resultado.put("idSolicitud", asignacion.getSolicitud().getIdSolicitud());
+            resultado.put("idColaborador", asignacion.getColaborador().getIdColaborador());
+            return resultado;
+        }).collect(Collectors.toList());
     }
 
     @Transactional
     public Asignacion asignarColaborador(AsignacionDTO asignacionDTO) {
 
-        // Obtener la solicitud de la BD
         Solicitud solicitud = solicitudRepository.findById(asignacionDTO.getIdSolicitud())
                 .orElseThrow(() -> new RuntimeException("Solicitud no encontrada"));
 
-        // Obtener el colaborador de la BD
         Colaborador colaborador = colaboradorRepository.findById(asignacionDTO.getIdColaborador())
                 .orElseThrow(() -> new RuntimeException("Colaborador no encontrado"));
 
-        // Validar si se intenta asignar como coordinador
         if (asignacionDTO.isEsCoordinador()) {
             if (solicitud.getIdColaboradorQueEsCoordinador() != null) {
                 throw new RuntimeException("Esta solicitud ya tiene un coordinador asignado");
             }
-            // Asignar el colaborador como coordinador en la solicitud
             solicitud.setIdColaboradorQueEsCoordinador(colaborador);
-            solicitudRepository.save(solicitud); // Guarda la actualización en la BD
+            solicitudRepository.save(solicitud);
         }
 
-        // Crear la nueva asignación
         Asignacion nuevaAsignacion = new Asignacion();
         nuevaAsignacion.setSolicitud(solicitud);
         nuevaAsignacion.setColaborador(colaborador);
-        // Aquí podrías guardar el flag esCoordinador en Asignacion si tienes esa
-        // propiedad
-
-        // Guardar la asignación en la BD
         return asignacionRepository.save(nuevaAsignacion);
     }
 }

@@ -35,12 +35,10 @@ public class ClienteService {
         Cliente cliente = new Cliente();
         cliente.setNombreCliente(dto.getNombreCliente());
 
-        // Buscar tipoCliente por ID
         TipoCliente tipo = tipoClienteRepository.findById(dto.getTipoCliente())
                 .orElseThrow(() -> new RuntimeException("TipoCliente no encontrado"));
         cliente.setTipoCliente(tipo);
 
-        // Buscar los softwares por ID
         Set<Software> softwares = dto.getSoftwares().stream()
                 .map(id -> softwareRepository.findById(id)
                         .orElseThrow(() -> new RuntimeException("Software no encontrado con ID: " + id)))

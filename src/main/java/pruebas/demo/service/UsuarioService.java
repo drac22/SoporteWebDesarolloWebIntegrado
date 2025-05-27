@@ -43,7 +43,7 @@ public class UsuarioService {
     }
 
     @Transactional
-    public Usuario agregarClienteDesdeDto(UsuarioDTO dto) {
+    public Usuario agregarUsuarioDesdeDto(UsuarioDTO dto) {
         Usuario usuario = new Usuario();
         usuario.setNombreUsuario(dto.getNombreUsuario());
         usuario.setTelefonoUsuario(dto.getTelefonoUsuario());

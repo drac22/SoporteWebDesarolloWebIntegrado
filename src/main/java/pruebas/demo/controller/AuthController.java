@@ -1,23 +1,31 @@
 package pruebas.demo.controller;
 
-// import org.springframework.web.bind.annotation.PostMapping;
-// import org.springframework.web.bind.annotation.RequestMapping;
-// import org.springframework.web.bind.annotation.RequestParam;
-// import org.springframework.web.bind.annotation.RestController;
-
-// import pruebas.demo.service.JwtService;
-
 // @RestController
 // @RequestMapping("/api/auth")
 public class AuthController {
-    // private final JwtService jwtService;
 
-    // public AuthController(JwtService jwtService) {
-    //     this.jwtService = jwtService;
-    // }
+    // @Autowired
+    // private AuthenticationManager authManager;
+
+    // @Autowired
+    // private JwtService jwtService;
+
+    // @Autowired
+    // private CustomUserDetailsService userDetailsService;
 
     // @PostMapping("/login")
-    // public String login(@RequestParam String username, @RequestParam String password){
-    //     return jwtService.generateToken(username);
+    // public ResponseEntity<?> login(@RequestParam String correo, @RequestParam String password) {
+    //     try {
+    //         Authentication auth = authManager.authenticate(
+    //                 new UsernamePasswordAuthenticationToken(correo, password));
+
+    //         UserDetails userDetails = (UserDetails) auth.getPrincipal();
+
+    //         String token = jwtService.generateToken(userDetails.getUsername());
+
+    //         return ResponseEntity.ok(Map.of("token", token));
+    //     } catch (AuthenticationException ex) {
+    //         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Credenciales inválidas");
+    //     }
     // }
 }

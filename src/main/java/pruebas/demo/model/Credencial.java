@@ -33,7 +33,7 @@ public class Credencial {
 
     @ManyToOne
     @JoinColumn(name = "idTipoCredencial")
-    private TipoCredencial tipoCredencial; // ADMIN, USUARIO, COLABORADOR
+    private TipoCredencial tipoCredencial;
 
     @JsonManagedReference
     @OneToOne(mappedBy = "credencial")

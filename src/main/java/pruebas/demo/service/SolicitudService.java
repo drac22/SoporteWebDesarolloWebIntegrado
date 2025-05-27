@@ -57,10 +57,6 @@ public class SolicitudService {
         return solicitudRepository.save(nuevaSolicitud);
     }
 
-    // public List<Solicitud> listarSolicitudesPorUsuario(Long idUsuario) {
-    // return solicitudRepository.findByUsuarioIdUsuario(idUsuario);
-    // }
-
     public List<SolicitudDTOResponse> listarSolicitudesPorUsuarioDTO(Long idUsuario) {
         List<Solicitud> solicitudes = solicitudRepository.findByUsuarioIdUsuario(idUsuario);
 
@@ -68,10 +64,9 @@ public class SolicitudService {
             SolicitudDTOResponse dto = new SolicitudDTOResponse();
             dto.setIdSolicitud(solicitud.getIdSolicitud());
             dto.setIdUsuario(solicitud.getUsuario().getIdUsuario());
-            dto.setNombreUsuario(solicitud.getUsuario().getNombreUsuario()); // o getNombreUsuario(), depende de tu entidad
-                                                                      // Usuario
+            dto.setNombreUsuario(solicitud.getUsuario().getNombreUsuario());
             dto.setMotivo(solicitud.getMotivo());
-            dto.setEstado(solicitud.getEstado().getEstadoSolicitud()); // o como tengas el nombre del estado
+            dto.setEstado(solicitud.getEstado().getEstadoSolicitud());
             dto.setFechaRegistro(solicitud.getFechaRegistro());
             dto.setFechaCulminacion(solicitud.getFechaCulminacion());
             dto.setTipoSolicitud(

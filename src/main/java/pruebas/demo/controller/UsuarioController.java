@@ -36,7 +36,7 @@ public class UsuarioController {
 
     @PostMapping("/agregarUsuario")
     public ResponseEntity<Usuario> registrar(@RequestBody UsuarioDTO usuarioDTO) {
-        Usuario nuevo = usuarioService.agregarClienteDesdeDto(usuarioDTO);
+        Usuario nuevo = usuarioService.agregarUsuarioDesdeDto(usuarioDTO);
         return ResponseEntity.ok(nuevo);
     }
 }
