@@ -36,7 +36,7 @@ public class SolicitudController {
     return ResponseEntity.ok(solicitudesDTO);
 }
 
-    @PostMapping("/agregarSolicitud")
+    @PostMapping("/registrarSolicitud")
     public ResponseEntity<Solicitud> agregarSolicitud(@RequestBody SolicitudDTO solicitudDTO) {
         Solicitud solicitud = solicitudService.agregarSolicitud(solicitudDTO);
         return ResponseEntity.ok(solicitud);

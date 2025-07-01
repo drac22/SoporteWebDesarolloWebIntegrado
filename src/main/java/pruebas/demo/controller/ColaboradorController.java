@@ -3,7 +3,9 @@ package pruebas.demo.controller;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,7 +25,7 @@ public class ColaboradorController {
     }
 
     @GetMapping("/colaboradores")
-    public List<Colaborador> mostrarColaboradores(){
+    public List<Colaborador> mostrarColaboradores() {
         return colaboradorService.mostrarColaboradores();
     }
 
@@ -32,5 +34,10 @@ public class ColaboradorController {
         Colaborador nuevo = colaboradorService.agregarColaboradorDesdeDto(colaboradorDTO);
         return ResponseEntity.ok(nuevo);
     }
-}
 
+    @DeleteMapping("/eliminarColaborador/{id}")
+    public void eliminarColaborador(@PathVariable Long id) {
+        colaboradorService.eliminarCliente(id);
+    }
+
+}

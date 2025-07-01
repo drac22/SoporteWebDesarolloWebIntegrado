@@ -60,4 +60,8 @@ public class ColaboradorService {
 
         return colaboradorRepository.save(colaborador);
     }
+
+    public void eliminarCliente(Long id) {
+        colaboradorRepository.deleteById(id);
+    }
 }

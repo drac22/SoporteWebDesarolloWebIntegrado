@@ -39,17 +39,28 @@ public class SecurityConfig {
     // return http.build();
     // }
 
+    // @Bean
+    // public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    // http.csrf(csrf -> csrf.disable())
+    // .authorizeHttpRequests(auth -> auth
+    // .requestMatchers(HttpMethod.POST, "/api/agregarSolicitud").hasRole("USUARIO")
+    // .requestMatchers(HttpMethod.GET,
+    // "/api/mostrarSolicitudesByIdUsuario/**")
+    // .hasRole("USUARIO")
+    // .requestMatchers(HttpMethod.POST,
+    // "/api/registrarActividad").hasRole("COLABORADOR")
+    // .anyRequest().hasRole("ADMIN"))
+    // .httpBasic(Customizer.withDefaults());
+    // return http.build();
+    // }
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.csrf(csrf -> csrf.disable())
+        http
+                .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(HttpMethod.POST, "/api/agregarSolicitud").hasRole("USUARIO")
-                        .requestMatchers(HttpMethod.GET,
-                                "/api/mostrarSolicitudesByIdUsuario/**")
-                        .hasRole("USUARIO")
-                        .requestMatchers(HttpMethod.POST, "/api/registrarActividad").hasRole("COLABORADOR")
-                        .anyRequest().hasRole("ADMIN"))
-                .httpBasic(Customizer.withDefaults());
+                        .anyRequest().permitAll() // ❗ Permitir todo sin autenticación
+                );
         return http.build();
     }
 

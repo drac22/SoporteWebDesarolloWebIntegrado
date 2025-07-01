@@ -20,7 +20,6 @@ import pruebas.demo.model.tipos.TipoCredencial;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Table(name = "tbl_credencial")
 public class Credencial {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idCredencial;
@@ -41,5 +40,4 @@ public class Credencial {
 
     @OneToOne(mappedBy = "credencial")
     private Colaborador colaborador;
-
 }

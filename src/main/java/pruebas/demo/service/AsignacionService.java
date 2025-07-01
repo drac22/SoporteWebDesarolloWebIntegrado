@@ -1,8 +1,6 @@
 package pruebas.demo.service;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
@@ -12,6 +10,7 @@ import pruebas.demo.model.Asignacion;
 import pruebas.demo.model.Colaborador;
 import pruebas.demo.model.Solicitud;
 import pruebas.demo.model.DTO.AsignacionDTO;
+import pruebas.demo.model.DTO.AsignacionDTOResponse;
 import pruebas.demo.repository.AsignacionRepository;
 import pruebas.demo.repository.ColaboradorRepository;
 import pruebas.demo.repository.SolicitudRepository;
@@ -30,18 +29,29 @@ public class AsignacionService {
         this.solicitudRepository = solicitudRepository;
     }
 
-    // public List<Asignacion> mostrarColaboradoresAsignados() {
-    // return asignacionRepository.findAll();
-    // }
-
-    public List<Map<String, Object>> mostrarColaboradoresAsignados() {
+    public List<Asignacion> mostrarAsignaciones() {
         List<Asignacion> asignaciones = asignacionRepository.findAll();
+        return asignaciones;
+    }
+
+    @Transactional
+    public List<AsignacionDTOResponse> mostrarAsignacionesByIdColaborador(Long idColaborador) {
+        List<Asignacion> asignaciones = asignacionRepository.findAll().stream()
+                .filter(a -> a.getColaborador().getIdColaborador().equals(idColaborador))
+                .collect(Collectors.toList());
 
         return asignaciones.stream().map(asignacion -> {
-            Map<String, Object> resultado = new HashMap<>();
-            resultado.put("idSolicitud", asignacion.getSolicitud().getIdSolicitud());
-            resultado.put("idColaborador", asignacion.getColaborador().getIdColaborador());
-            return resultado;
+            Solicitud solicitud = asignacion.getSolicitud();
+
+            AsignacionDTOResponse dto = new AsignacionDTOResponse();
+            dto.setIdAsignacion(asignacion.getIdAsignacion());
+            dto.setIdSolicitud(solicitud.getIdSolicitud());
+            dto.setMotivo(solicitud.getMotivo());
+            dto.setNombreUsuario(solicitud.getUsuario().getNombreUsuario());
+            dto.setFechaRegistro(solicitud.getFechaRegistro());
+            dto.setNombreTipoSolicitud(solicitud.getTipoSolicitud().getTipoSolicitud());
+
+            return dto;
         }).collect(Collectors.toList());
     }
 
