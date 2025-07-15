@@ -34,10 +34,11 @@ public class Credencial {
     @JoinColumn(name = "idTipoCredencial")
     private TipoCredencial tipoCredencial;
 
-    @JsonManagedReference
     @OneToOne(mappedBy = "credencial")
+    @JsonManagedReference
     private Usuario usuario;
 
     @OneToOne(mappedBy = "credencial")
+    @JsonManagedReference
     private Colaborador colaborador;
 }

@@ -38,7 +38,7 @@ public class UsuarioService {
         return usuarioRepository.findAll();
     }
 
-    public Optional<Usuario> buscarUsuarioPorId(Long id){
+    public Optional<Usuario> buscarUsuarioPorId(Long id) {
         return usuarioRepository.findById(id);
     }
 
@@ -58,15 +58,15 @@ public class UsuarioService {
 
         TipoCredencial tipoCredencial = tipoCredencialRepository.findById(1L)
                 .orElseThrow(() -> new RuntimeException("ERROR"));
-
         credencial.setTipoCredencial(tipoCredencial);
 
         usuario.setCredencial(credencial);
+        credencial.setUsuario(usuario);
 
         return usuarioRepository.save(usuario);
     }
 
-    public void eliminarUsuario(Long id){
+    public void eliminarUsuario(Long id) {
         usuarioRepository.deleteById(id);
     }
 }

@@ -3,9 +3,7 @@ package pruebas.demo.service;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
-
 import org.springframework.stereotype.Service;
-
 import pruebas.demo.model.Actividad;
 import pruebas.demo.model.Asignacion;
 import pruebas.demo.model.DTO.ActividadDTO;

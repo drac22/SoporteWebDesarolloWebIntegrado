@@ -12,4 +12,5 @@ public class AsignacionDTOResponse {
     private String nombreUsuario;
     private String nombreTipoSolicitud;
     private LocalDateTime fechaRegistro;
+    private String estado;
 }

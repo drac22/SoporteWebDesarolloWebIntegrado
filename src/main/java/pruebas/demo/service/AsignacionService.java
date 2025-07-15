@@ -2,9 +2,7 @@ package pruebas.demo.service;
 
 import java.util.List;
 import java.util.stream.Collectors;
-
 import org.springframework.stereotype.Service;
-
 import jakarta.transaction.Transactional;
 import pruebas.demo.model.Asignacion;
 import pruebas.demo.model.Colaborador;
@@ -50,6 +48,7 @@ public class AsignacionService {
             dto.setNombreUsuario(solicitud.getUsuario().getNombreUsuario());
             dto.setFechaRegistro(solicitud.getFechaRegistro());
             dto.setNombreTipoSolicitud(solicitud.getTipoSolicitud().getTipoSolicitud());
+            dto.setEstado(solicitud.getEstado().getEstadoSolicitud());
 
             return dto;
         }).collect(Collectors.toList());

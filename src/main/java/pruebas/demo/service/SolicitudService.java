@@ -2,9 +2,14 @@ package pruebas.demo.service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import jakarta.transaction.Transactional;
 import pruebas.demo.model.Solicitud;
@@ -76,5 +81,23 @@ public class SolicitudService {
                     : null);
             return dto;
         }).collect(Collectors.toList());
+    }
+
+    public Solicitud actualizarSolicitud(Long id, Long idEstado, LocalDateTime fechaCulminacion) {
+        Optional<Solicitud> solicitudOpt = solicitudRepository.findById(id);
+        if (!solicitudOpt.isPresent()) {
+            throw new RuntimeException("Solicitud no encontrada");
+        }
+
+        Optional<EstadoSolicitud> estadoOpt = estadoSolicitudRepository.findById(idEstado);
+        if (!estadoOpt.isPresent()) {
+            throw new RuntimeException("Estado no válido");
+        }
+
+        Solicitud solicitud = solicitudOpt.get();
+        solicitud.setEstado(estadoOpt.get());
+        solicitud.setFechaCulminacion(fechaCulminacion);
+
+        return solicitudRepository.save(solicitud);
     }
 }

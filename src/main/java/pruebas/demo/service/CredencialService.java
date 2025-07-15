@@ -1,6 +1,7 @@
 package pruebas.demo.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -17,6 +18,10 @@ public class CredencialService {
 
     public List<Credencial> mostrarCredenciales() {
         return credencialRepository.findAll();
+    }
+
+    public Optional<Credencial> mostrarCredencialById(Long id){
+        return credencialRepository.findById(id);
     }
 
 }

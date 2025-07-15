@@ -11,7 +11,7 @@ import pruebas.demo.model.Credencial;
 import pruebas.demo.repository.CredencialRepository;
 
 @Service
-public class CustomUserDetailsService implements UserDetailsService {
+public class CredencialDetailsService implements UserDetailsService {
 
     @Autowired
     private CredencialRepository credencialRepository;
@@ -19,21 +19,12 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String correo) throws UsernameNotFoundException {
         Credencial credencial = credencialRepository.findByCorreo(correo)
-                .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado"));
-
-                String rol;
-                if (credencial.getTipoCredencial().getIdTipoCredencial() == 2) {
-                    rol = "ADMIN";
-                } else if (credencial.getTipoCredencial().getIdTipoCredencial() == 1) {
-                    rol = "USUARIO";
-                } else {
-                    rol = "COLABORADOR";
-                }
+                .orElseThrow(() -> new UsernameNotFoundException("No existe el usuario"));
 
         return User.builder()
                 .username(credencial.getCorreo())
                 .password(credencial.getPassword())
-                .roles(rol)
+                .roles("USER")
                 .build();
     }
 }
