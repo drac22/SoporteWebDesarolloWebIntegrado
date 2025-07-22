@@ -1,16 +1,19 @@
 package pruebas.demo.service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 import jakarta.transaction.Transactional;
 import pruebas.demo.model.Asignacion;
 import pruebas.demo.model.Colaborador;
+import pruebas.demo.model.Notificacion;
 import pruebas.demo.model.Solicitud;
 import pruebas.demo.model.DTO.AsignacionDTO;
 import pruebas.demo.model.DTO.AsignacionDTOResponse;
 import pruebas.demo.repository.AsignacionRepository;
 import pruebas.demo.repository.ColaboradorRepository;
+import pruebas.demo.repository.NotificacionRepository;
 import pruebas.demo.repository.SolicitudRepository;
 
 @Service
@@ -19,12 +22,14 @@ public class AsignacionService {
     private final AsignacionRepository asignacionRepository;
     private final ColaboradorRepository colaboradorRepository;
     private final SolicitudRepository solicitudRepository;
+    private final NotificacionRepository notificacionRepository;
 
     public AsignacionService(AsignacionRepository asignacionRepository, ColaboradorRepository colaboradorRepository,
-            SolicitudRepository solicitudRepository) {
+            SolicitudRepository solicitudRepository, NotificacionRepository notificacionRepository) {
         this.asignacionRepository = asignacionRepository;
         this.colaboradorRepository = colaboradorRepository;
         this.solicitudRepository = solicitudRepository;
+        this.notificacionRepository = notificacionRepository;
     }
 
     public List<Asignacion> mostrarAsignaciones() {
@@ -56,7 +61,6 @@ public class AsignacionService {
 
     @Transactional
     public Asignacion asignarColaborador(AsignacionDTO asignacionDTO) {
-
         Solicitud solicitud = solicitudRepository.findById(asignacionDTO.getIdSolicitud())
                 .orElseThrow(() -> new RuntimeException("Solicitud no encontrada"));
 
@@ -74,6 +78,20 @@ public class AsignacionService {
         Asignacion nuevaAsignacion = new Asignacion();
         nuevaAsignacion.setSolicitud(solicitud);
         nuevaAsignacion.setColaborador(colaborador);
-        return asignacionRepository.save(nuevaAsignacion);
+
+        Asignacion guardada = asignacionRepository.save(nuevaAsignacion);
+
+        String mensaje = "Solicitud N° " + solicitud.getIdSolicitud() +
+                " fue asignada — Asignación N° " + guardada.getIdAsignacion();
+
+        Notificacion noti = new Notificacion();
+        noti.setMensaje(mensaje);
+        noti.setUsuario(solicitud.getUsuario());
+        noti.setFecha(LocalDateTime.now());
+        noti.setLeido(false);
+        notificacionRepository.save(noti);
+
+        return guardada;
     }
+
 }
