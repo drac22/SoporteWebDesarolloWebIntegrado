@@ -1,7 +1,9 @@
 package pruebas.demo.service;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -127,6 +129,16 @@ public class SolicitudService {
         notificacionRepository.save(noti);
 
         return actualizada;
+    }
+
+    public Map<String, Integer> mostrarResumenSolicitudes() {
+        int pendientes = solicitudRepository.countByEstadoIdEstadoSolicitud(1L);
+        int solucionadas = solicitudRepository.countByEstadoIdEstadoSolicitud(2L);
+
+        Map<String, Integer> resumen = new HashMap<>();
+        resumen.put("pendientes", pendientes);
+        resumen.put("solucionadas", solucionadas);
+        return resumen;
     }
 
 }

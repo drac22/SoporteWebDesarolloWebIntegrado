@@ -12,14 +12,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import pruebas.demo.model.Notificacion;
-import pruebas.demo.model.Usuario;
 import pruebas.demo.model.DTO.NotificacionDTO;
-import pruebas.demo.repository.NotificacionRepository;
 import pruebas.demo.service.NotificacionService;
 
 
 @RestController
-@RequestMapping("/api/notificaciones")
+@RequestMapping("/api")
 public class NotificacionController {
 
     @Autowired

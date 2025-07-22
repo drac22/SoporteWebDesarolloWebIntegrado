@@ -8,6 +8,8 @@ import org.springframework.stereotype.Repository;
 import pruebas.demo.model.Solicitud;
 
 @Repository
-public interface SolicitudRepository extends JpaRepository<Solicitud, Long>{
+public interface SolicitudRepository extends JpaRepository<Solicitud, Long> {
     List<Solicitud> findByUsuarioIdUsuario(Long idUsuario);
+
+    int countByEstadoIdEstadoSolicitud(Long idEstadoSolicitud);
 }
