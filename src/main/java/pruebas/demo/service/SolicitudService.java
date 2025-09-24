@@ -64,17 +64,17 @@ public class SolicitudService {
         nuevaSolicitud.setTipoSolicitud(tipoSolicitud);
         nuevaSolicitud.setEstado(estado);
 
-        // ✅ Se guarda la solicitud primero
+        
         Solicitud guardada = solicitudRepository.save(nuevaSolicitud);
 
-        // 🔔 Se crea y guarda la notificación
+        
         String mensaje = "Solicitud N° " + guardada.getIdSolicitud() + " registrada exitosamente";
         Notificacion notificacion = new Notificacion();
         notificacion.setMensaje(mensaje);
         notificacion.setUsuario(usuario);
         notificacion.setFecha(LocalDateTime.now());
         notificacion.setLeido(false);
-        notificacionRepository.save(notificacion); // o usar notificacionService
+        notificacionRepository.save(notificacion);
 
         return guardada;
     }
